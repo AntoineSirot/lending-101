@@ -3,16 +3,27 @@
 
 var TDErc20 = artifacts.require("ERC20TD.sol");
 var evaluator = artifacts.require("Evaluator.sol");
+var exercice = artifacts.require("ExerciceSolution.sol");
 
 
-module.exports = (deployer, network, accounts) => {
-    deployer.then(async () => {
-        await deployTDToken(deployer, network, accounts); 
-        await deployEvaluator(deployer, network, accounts); 
-        await setPermissionsAndRandomValues(deployer, network, accounts); 
-        await deployRecap(deployer, network, accounts); 
-    });
+// module.exports = (deployer, network, accounts) => {
+//     deployer.then(async () => {
+// 		// await deployTDToken(deployer, network, accounts); 
+// 		// await deployEvaluator(deployer, network, accounts); 
+// 		// await setPermissionsAndRandomValues(deployer, network, accounts); 
+// 		// await deployRecap(deployer, network, accounts); 
+// 		await deployExercice(deployer, network, accounts)
+//     });
+// };
+
+module.exports = function (deployer, network, accounts) {
+	deployer.deploy(exercice)
 };
+
+
+async function deployExercice(deployer, network, accounts) {
+	Exercice = await exercice.new()
+}
 
 async function deployTDToken(deployer, network, accounts) {
 	TDToken = await TDErc20.new("TD-AAVE-101","TD-AAVE-101",web3.utils.toBN("42000000000000000000000000000"))
